@@ -1,0 +1,43 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Expense Tracker</title> 
+    <link rel="stylesheet" type="text/css" href="/static/style.css"> 
+</head> 
+<body> 
+    <div class="container"> 
+        <h1>Expense Tracker &#128184;</h1> 
+        <form id="expense-form" action="/expenses" method="post"> 
+            <input type="text" id="expense-name" name="name" placeholder="Expense Name" required> 
+            <input type="number" id="expense-amount" name="amount" placeholder="Amount" required> 
+            <button type="submit">Add Expense</button> 
+        </form> 
+        <div class="expense-table"> 
+            <table> 
+                <thead> 
+                    <tr> 
+                        <th>Expense Name</th> 
+                        <th>Amount</th> 
+                        <th>Created Time</th>
+                    </tr> 
+                </thead> 
+                <tbody id="expense-list"> 
+                    {{range .expenses}}
+                    <tr> 
+                        <td>{{.Name}}</td> 
+                        <td>{{.Amount}}</td> 
+                        <td>{{.CreatedAt}}</td>
+                    </tr> 
+                    {{end}}
+                </tbody> 
+            </table> 
+            <div class="total-amount"> 
+                <strong>Total:</strong> 
+                &#8377<span id="total-amount">{{printf "%.2f" .total}}</span> 
+            </div> 
+        </div> 
+    </div> 
+</body> 
+</html>
