@@ -73,7 +73,7 @@ func main() {
 			return
 		}
 
-		t := time.Now().Format("2006-01-02 3:4: PM")
+		t := time.Now().Format("2006-01-02 3:04: PM")
 
 		expense := Expense{Name: name, Amount: amount, CreatedAt: t}
 		err = createExpense(&expense)
@@ -99,8 +99,11 @@ func getExpenses() ([]Expense, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	// Find all documents in the collection
-	cursor, err := expensesCollection.Find(ctx, bson.M{})
+	// Define the options for sorting
+	findOptions := options.Find().SetSort(bson.D{{"createdAt", -1}}) // Sort by createdAt field in descending order
+
+	// Find all documents in the collection, sorted by createdAt field in descending order
+	cursor, err := expensesCollection.Find(ctx, bson.D{}, findOptions)
 	if err != nil {
 		return nil, err
 	}
