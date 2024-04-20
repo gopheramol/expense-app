@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  db:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    container_name: datastore
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
